@@ -1,6 +1,6 @@
 <?php
 
-/*********************************************************************************
+/* * *******************************************************************************
  * 
  * STARFACE SugarCRM Connector is a computer telephony integration module for the
  * SugarCRM customer relationship managment program by SugarCRM, Inc.
@@ -24,9 +24,10 @@
  * You can contact STARFACE GmbH at Stephanienstr. 102, 76133 Karlsruhe,
  * GERMANY or at the e-mail address info@starface-pbx.com
  * 
- ********************************************************************************/
+ * ****************************************************************************** */
 
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry'))
+    define('sugarEntry', true);
 
 chdir("../");
 
@@ -41,35 +42,42 @@ require_once("modules/CTI/include/StarfaceHelper.class.php");
 session_start();
 $authController = new AuthenticationController();
 if (isset($_SESSION['authenticated_user_id'])) {
-	if (!$authController->sessionAuthenticate()) {
-		session_destroy();
-		indexRedirect(array('module' => 'Users', 'action' => 'Login'));
-	}
-	$GLOBALS['log']->debug('Current user is: ' . $current_user->user_name);
-	$current_user->update_access_time();
+    if (!$authController->sessionAuthenticate()) {
+        session_destroy();
+        indexRedirect(array('module' => 'Users', 'action' => 'Login'));
+    }
+    $GLOBALS['log']->debug('Current user is: ' . $current_user->user_name);
+    $current_user->update_access_time();
 }
 
-if (empty($current_user->id))return; // not logged in
+if (empty($current_user->id))
+    return; // not logged in
 
-$host 	= StarfaceHelper::getHostArray();
+$host = StarfaceHelper::getHostArray();
 
 $callback = StarfaceHelper::getCallbackArray();
 $starface_user = $current_user->cti_user_id;
 $starface_password = $current_user->cti_password;
-//var_dump($host);
-$server = UcpServerFactory::createUcpServer($starface_user , $starface_password, $host, $callback);
+
+if (!$starface_user || !$starface_password) exit('not configured');
+
+$server = UcpServerFactory::createUcpServer($starface_user, $starface_password, $host, $callback);
+
 $server->setDebugLevel(0);
+
 $probeReturn = $server->probe();
 
-if($probeReturn != 1){
-	StarfaceHelper::clearStarfaceLogFor($starface_user, $current_user->db);
-	$loginReturn = $server->login();
-	
-	$setStatesReturn = $server->setProvidedServices(
-	array(
-				"ucp.v20.client.communication.call",
-				"ucp.v20.client.connection"));
-}
-print "OK";
+if ($probeReturn != 1 or true) {
+    StarfaceHelper::clearStarfaceLogFor($starface_user, $current_user->db);
+    $loginReturn = $server->login();
 
+    $setStatesReturn = $server->setProvidedServices(
+            array(
+                "ucp.v20.client.communication.call",
+                "ucp.v20.client.connection"));
+    
+    echo "OK, neues Login";
+}
+else
+    print "OK";
 ?>

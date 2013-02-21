@@ -11,3 +11,4 @@ It is modified to work with info@hand 7.0.12 and newer.
 Use this software on your own risk and make backups before installation!
 
 You can get a version with support contract from visual4 GmbH
+
