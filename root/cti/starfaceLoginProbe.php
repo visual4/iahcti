@@ -63,6 +63,12 @@ if (!$starface_user || !$starface_password) exit('not configured');
 
 $server = UcpServerFactory::createUcpServer($starface_user, $starface_password, $host, $callback);
 
+// check if callback configuration has changed
+if (serialize($callback) != $_SESSION['cti_callback_array']){
+    $_SESSION['cti_callback_array'] = serialize($callback);
+    $server->logout();
+}
+
 $server->setDebugLevel(0);
 
 $probeReturn = $server->probe();
