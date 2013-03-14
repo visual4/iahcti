@@ -40,20 +40,23 @@ require_once(dirname(__FILE__)."/../../xmlrpc-2.2/lib/xmlrpcs.inc");
  * 			  an E_USER_NOTICE
  * 
  * @author stefan ernst
+ * 
+ * implements v20 ucp methods
+ * 
  */
 class UcpServerProxy implements UcpServerCommunicationCall, UcpServerConnection
 {
 
-	private $client;
+	protected $client;
 
-	private $user;
-	private $password;
-	private $host;
+	protected $user;
+	protected $password;
+	protected $host;
 
-	private $debuglevel;
+	protected $debuglevel;
 
-	private $connection = "ucp.v20.server.connection.";
-	private $communication = "ucp.v20.server.communication.call.";
+	protected $connection = "ucp.v20.server.connection.";
+	protected $communication = "ucp.v20.server.communication.call.";
 
 	/**
 	 * Initiates a GET-Request with the given parameters for authentication
@@ -115,7 +118,7 @@ class UcpServerProxy implements UcpServerCommunicationCall, UcpServerConnection
 		return $this->requestNoParamArrayResp($this->communication.'getPhoneIds');
 	}
 	
-	private function requestNoParamArrayResp($functionname)
+	protected function requestNoParamArrayResp($functionname)
 	{
 		$m=new xmlrpcmsg($functionname);
 		$response = $this->client->send($m);

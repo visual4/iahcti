@@ -73,7 +73,7 @@ $server->setDebugLevel(0);
 
 $probeReturn = $server->probe();
 
-if ($probeReturn != 1 or true) {
+if ($probeReturn != 1) {
     StarfaceHelper::clearStarfaceLogFor($starface_user, $current_user->db);
     $loginReturn = $server->login();
 
@@ -82,7 +82,7 @@ if ($probeReturn != 1 or true) {
                 "ucp.v20.client.communication.call",
                 "ucp.v20.client.connection"));
     
-    echo "OK, neues Login";
+    echo "OK, new Login";
 }
 else
     print "OK";

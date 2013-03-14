@@ -5,8 +5,8 @@ acceptable_sugar_versions
 name: Starface module
 description: Starface CTI Appliance integration
 author: visual4 GmbH - BR
-published_date: 2013-03-12
-version: 2.2
+published_date: 2013-03-14
+version: 2.2.1
 type: module
 is_uninstallable: true
 id: CTIModule

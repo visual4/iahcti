@@ -26,7 +26,7 @@
  * 
  ********************************************************************************/
 
-	require_once(dirname(__FILE__)."/impl/UcpServerProxy.php");
+	
 
 	class UcpServerFactory
 	{
@@ -40,11 +40,19 @@
 		 * 
 		 * @return phpUCI instance
 		 */		
-		static function &createUcpServer($username,$password,$host,$callback)
+		static function &createUcpServer($username,$password,$host,$callback, $version = '')
 		{
-			if(!isset(UcpServerFactory::$instance))
+			//TODO: check if version of instance and call are the same 
+            if(!isset(UcpServerFactory::$instance))
 			{
-				UcpServerFactory::$instance = new UcpServerProxy($username,$password,$host,$callback);
+                $class = 'UcpServerProxy'.$version;
+				if (is_file(dirname(__FILE__)."/impl/".$class.".php")){
+                    require_once(dirname(__FILE__)."/impl/".$class.".php");
+                } else {
+                    require_once(dirname(__FILE__)."/impl/UcpServerProxy.php");
+                    $class = 'UcpServerProxy';
+                }
+                UcpServerFactory::$instance = new $class($username,$password,$host,$callback);
 			}
 			return UcpServerFactory::$instance;
 		}
