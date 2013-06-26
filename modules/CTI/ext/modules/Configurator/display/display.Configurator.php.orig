@@ -52,7 +52,11 @@ fields
 		vdesc: LBL_CTI_CALLBACK_HTTPS_DESC
 		type: bool
 		default: true
-	cti_asterisk_user
+<<<<<<< HEAD
+=======
+	
+>>>>>>> asterisk Änderungen im Konfigurator
+    cti_asterisk_user
         config: cti.asterisk_user
         vname: LBL_CTI_ASTERISK_USER 
         vdesc: LBL_CTI_ASTERISK_USER_DESC
@@ -71,5 +75,10 @@ fields
 		config: cti.asterisk_port
 		vname: LBL_CTI_PORT
 		vdesc: LBL_CTI_PORT_DESC
+<<<<<<< HEAD
+		type: int
+		default: 443
+=======
 		type: varchar
 		default: 5038
+>>>>>>> asterisk Änderungen im Konfigurator

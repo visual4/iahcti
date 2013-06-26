@@ -68,18 +68,12 @@ if ($current_user->db->checkError()) {
 $response = array();
 //$response[] = array('cti_id' => '111111', 'state' => 'Ringing', 'full_name' => 'Mr. Test', 'company' => 'TestFirma', 'direction' => "Outbound", 'call_type' => "SFLBL_GOING_OUT", 'phone_number' => '+49 711 6491238', 'sf_name' => 'caller_name', 'contact_id' => 'b02e7591-cad1-cdc9-33f5-5085194dcc95', 'found' => array('contacts' => array(12234)));
 //$response[] = array('cti_id' => '222222', 'state' => 'Ringing', 'full_name' => 'Mr. Test', 'company' => 'TestFirma', 'direction' => "Outbound", 'call_type' => "SFLBL_GOING_OUT", 'phone_number' => '11111111111111111', 'sf_name' => 'caller_name', 'contact_id' => '23452345', 'found' => array('contacts' => array(12234)));
+$mod_strings = AppConfig::setting("lang.strings.current.CTI");
 while ($row = $current_user->db->fetchByAssoc($resultSet)) {
 
 	$item = array();
 	$item['cti_id'] = $row['cti_id'];
 	$item['state'] = isset($mod_strings[$row['state']]) ? $mod_strings[$row['state']] : $row['state'];
-
-
-	$current_language = $_SESSION['authenticated_user_language'];
-	if (empty($current_language)) {
-		$current_language = $sugar_config['default_language'];
-	}
-	require("modules/CTI/language/" . $current_language . ".lang.php");
 
 	$query2 = "
 	SELECT * FROM cti_call log
@@ -285,8 +279,6 @@ require_once('XTemplate/xtpl.php');
 foreach ($response as $item) {
 	$xtpl = new XTemplate('cti/checkForNewStates.tpl');
 	$xtpl->assign("MOD", $mod_strings);
-	$xtpl->assign("APP", $app_strings);
-	$xtpl->assign("THEME", $_REQUEST['current_theme']);
 	$xtpl->assign("CURRENT_USER_ID", $currentUserObj->id);
 	$xtpl->assign("CTI_ID", $item['cti_id']);
 	$xtpl->assign("STATE", $item['state']);
