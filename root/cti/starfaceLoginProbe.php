@@ -57,14 +57,18 @@ $host = StarfaceHelper::getHostArray();
 
 $callback = StarfaceHelper::getCallbackArray();
 $starface_user = $current_user->cti_user_id;
-$starface_password = $current_user->cti_password;
 
-if (!$starface_user || !$starface_password) exit('not configured');
+$cti_password = $current_user->cti_password;
+if ($cti_password == 'XXXXXX') {
+    $enc = new v4_crm_crypt();
+    $cti_password = $enc->decryptAES($current_user->cti_hash, $enc->getSalt());
+}
+if (!$starface_user || !$cti_password) exit('not configured');
 
-$server = UcpServerFactory::createUcpServer($starface_user, $starface_password, $host, $callback);
+$server = UcpServerFactory::createUcpServer($starface_user, $cti_password, $host, $callback);
 
 // check if callback configuration has changed
-if (serialize($callback) != $_SESSION['cti_callback_array']){
+if (serialize($callback) != $_SESSION['cti_callback_array']) {
     $_SESSION['cti_callback_array'] = serialize($callback);
     $server->logout();
 }
@@ -78,12 +82,11 @@ if ($probeReturn != 1) {
     $loginReturn = $server->login();
 
     $setStatesReturn = $server->setProvidedServices(
-            array(
-                "ucp.v20.client.communication.call",
-                "ucp.v20.client.connection"));
-    
+        array(
+            "ucp.v20.client.communication.call",
+            "ucp.v20.client.connection"));
+
     echo "OK, new Login";
-}
-else
+} else
     print "OK";
 ?>

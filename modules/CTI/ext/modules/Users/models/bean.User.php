@@ -1,5 +1,12 @@
 <?php return; ?>
 
+hooks
+    before_save
+        --
+            class_function: user_before_save
+			class: v4_cti_hooks
+            file: modules/cti/v4_cti_hooks.php
+
 fields
 	cti_user_id
 		type: varchar
@@ -7,3 +14,6 @@ fields
 	cti_password
 		type: password
 		vname: LBL_CTI_PASSWORD
+    cti_hash
+        type: varchar
+        vname: LBL_CTI_HASH

@@ -5,8 +5,8 @@ acceptable_sugar_versions
 name: CTI module
 description: Starface / Asterisk CTI Appliance integration
 author: visual4 GmbH - BR
-published_date: 2013-06-26
-version: 2.2.3
+published_date: 2014-02-04
+version: 2.2.4
 type: module
 is_uninstallable: true
 id: CTIModule
