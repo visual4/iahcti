@@ -37,6 +37,7 @@ require_once('modules/Contacts/Contact.php');
 require_once("modules/CTI/include/api/UcpServerConnection.php");
 require_once("modules/CTI/include/api/UcpServerFactory.php");
 require_once("modules/CTI/include/StarfaceHelper.class.php");
+require_once 'modules/CTI/v4_crm_crypt.php';
 
 //error_reporting(E_ALL);
 session_start();
