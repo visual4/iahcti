@@ -5,7 +5,7 @@ hooks
         --
             class_function: user_before_save
 			class: v4_cti_hooks
-            file: modules/cti/v4_cti_hooks.php
+            file: modules/CTI/v4_cti_hooks.php
 
 fields
 	cti_user_id
