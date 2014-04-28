@@ -1,7 +1,7 @@
 <?php ?>
 acceptable_sugar_versions
 	regex_matches
-		- 7\.[01]\.[1-9]+
+		- 7\.[15]\.[1-9]+
 name: CTI module
 description: Starface / Asterisk CTI Appliance integration
 author: visual4 GmbH - BR
