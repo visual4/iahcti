@@ -129,9 +129,9 @@ public static function clearStarfaceLogFor($sfUserID, $dbObj){
 			'state' =>$callstate['state'],
 			'timestamp' =>$callstate['timestamp'],
 			'caller_number' =>$callstate['callerNumber'],
-			'caller_name' =>$callstate['callerName'],
+			'caller_name' =>utf8_encode($callstate['callerName']),
 			'called_number' =>$callstate['calledNumber'],
-			'called_name' =>$callstate['calledName'],
+			'called_name' =>utf8_encode($callstate['calledName']),
 		));
 		
 		if (!$rowUpdate->validate()){
