@@ -20,6 +20,7 @@ INCOMING: Klingelt
 RINGING: Klingelt
 CONNECTED: Verbunden
 
+
 LBL_LIST_CTI_KEYPAD: Starface Keypad
 
    

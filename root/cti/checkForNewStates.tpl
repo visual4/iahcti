@@ -4,7 +4,7 @@
 	<div class="leftColumnModuleHead">
 		<div class="leftColumnModuleName">
 			{CALL_TYPE} &nbsp;
-			<!-- BEGIN: call_settings --><img border="0" width="15" height="15" src="modules/CTI/include/img/Icon-preferences.png" onclick="window.location='index.php?module=Users&action=EditView&record={CURRENT_USER_ID}';" style="cursor:pointer;" />&nbsp;<!-- END: call_settings --><img border="0" width="15" height="15" src="modules/CTI/include/img/Icon-schliessen.png" onclick="starface_close_call('{STARFACE_ID}');" style="cursor:pointer;"/>
+			<!-- BEGIN: call_settings --><img border="0" width="15" height="15" src="modules/CTI/include/img/Icon-preferences.png" onclick="window.location='index.php?module=Users&action=EditView&record={CURRENT_USER_ID}';" style="cursor:pointer;" />&nbsp;<!-- END: call_settings --><img border="0" width="15" height="15" src="modules/CTI/include/img/Icon-schliessen.png" onclick="starface_close_call('{CTI_ID}');" style="cursor:pointer;"/>
 		</div>
 	</div>
 	<div class="subMenuOuter">
