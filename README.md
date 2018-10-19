@@ -1,12 +1,11 @@
 iahcti
 ======
 
-CTI module for infoathand 7.0.12+
+CTI module for 1CRM 7.8 up to 8.5
 
-This plugin is based on the Starface Sugar integration:
-http://www.starface.de/en/Solutions/integration/sugarCRM.php
+This plugin was originally based on the Starface Sugar integration.
 
-It is modified to work with info@hand 7.0.12 and newer.
+It has evolved a lot. 
 
 Use this software on your own risk and make backups before installation!
 
@@ -14,6 +13,6 @@ Please be aware that the version you find here on github might contain experimen
 
 You can get a version with support contract from visual4 GmbH
 
-For detailed information about this CTI integration see http://www.infoathand.de/crm-erweiterungen/
+For detailed information about this CTI integration see https://1crm-system.de/crm-erweiterungen/
 
-Here you will also find detailed information about the all-in-one CRM info@hand and its extensions and highlights (in German).
+Here you will also find detailed information about the all-in-one CRM solution 1CRM and its extensions and highlights (in German).

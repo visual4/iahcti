@@ -1,0 +1,12 @@
+{
+    "name": "visual4/cti",
+    "require": {
+        "defuse/php-encryption": "^2.1"
+    },
+    "authors": [
+        {
+            "name": "brafreider",
+            "email": "bjoern_rafreider@visual4.de"
+        }
+    ]
+}

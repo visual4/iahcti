@@ -39,9 +39,14 @@ require_once("modules/CTI/include/api/UcpServerFactory.php");
 require_once("modules/CTI/include/StarfaceHelper.class.php");
 require_once 'modules/CTI/v4_crm_crypt.php';
 
-//error_reporting(E_ALL);
 session_start();
+if (isset($_SESSION['loginprobetst']) && $_SESSION['loginprobetst'] + 50 > time()) {
+        exit('Starface Login still valid');
+}
+$_SESSION['loginprobetst'] = time();
 $authController = new AuthenticationController();
+
+
 if (isset($_SESSION['authenticated_user_id'])) {
     if (!$authController->sessionAuthenticate()) {
         session_destroy();
@@ -57,22 +62,28 @@ if (empty($current_user->id))
 $host = StarfaceHelper::getHostArray();
 
 $callback = StarfaceHelper::getCallbackArray();
+if (!isset($current_user->cti_user_id)) exit('CTI user ID in user configuration empty.');
 $starface_user = $current_user->cti_user_id;
 
+if (!isset($current_user->cti_password)) exit('Password in user configuration empty');
+
 $cti_password = $current_user->cti_password;
+
 if ($cti_password == 'XXXXXX') {
     $enc = new v4_crm_crypt();
     $cti_password = $enc->decryptAES($current_user->cti_hash, $enc->getSalt());
 }
-if (!$starface_user || !$cti_password) exit('not configured');
+if (!$starface_user || !$cti_password) exit('not configured; cti username or password empty');
 
 $server = UcpServerFactory::createUcpServer($starface_user, $cti_password, $host, $callback);
 
 // check if callback configuration has changed
-if (serialize($callback) != $_SESSION['cti_callback_array']) {
+if (!isset($_SESSION['cti_callback_array']) || serialize($callback) != $_SESSION['cti_callback_array']) {
     $_SESSION['cti_callback_array'] = serialize($callback);
+    session_write_close();
     $server->logout();
-}
+}else
+    session_write_close();
 
 $server->setDebugLevel(0);
 

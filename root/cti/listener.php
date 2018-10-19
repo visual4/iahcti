@@ -26,20 +26,31 @@
  * 
  ********************************************************************************/
 
-if(!defined('sugarEntry'))define('sugarEntry', true);
-
+define('sugarEntry', true);
+define('DISABLE_CLEAN_INCOMING_DATA', 1);
+$GLOBALS['sugar_version'] = '7.8.15';
 chdir("../");
 
 require_once('include/entryPoint.php');
 require_once("modules/CTI/include/api/impl/UcpServerEventsAdapter.php");
 
-function handle_error($errno, $errstr, $errfile, $errline)
+function log_error($errno, $errstr, $errfile, $errline)
 {
-	error_log($errstr, 3,'cti_error.log');
+	$errstr = "[".date(DATE_ATOM).']'.$errstr.' in '.$errfile.' line '.$errline."\n";
+	error_log($errstr, 3,'logs/cti_error.log');
+	return true;
 }
-
-set_error_handler('handle_error');
+function ctilog($string, $file='', $line='' ){
+	$debug = AppConfig::setting('cti.debugmodus');
+	if (!$debug)return;
+	log_error('1',$string, $file, $line);
+}
+set_error_handler('log_error');
+ctilog('--------------------Start Listener Call-----------------------------');
 
 UcpServerEventsAdapter::processEvents();
+
+ctilog('--------------------END Listener Call-------------------------------');
+
 
 ?>
