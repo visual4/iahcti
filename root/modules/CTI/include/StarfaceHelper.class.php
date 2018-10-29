@@ -103,7 +103,7 @@ class StarfaceHelper
 
     public static function log($str, $file = "log.log", $append = true)
     {
-        error_log($str, 3, $file);
+        error_log($str . "\n", 3, $file);
     }
 
 
@@ -134,7 +134,7 @@ class StarfaceHelper
     public function insertStarfaceMessage($callstate, & $user)
     {
         global $timedate;
-
+        StarfaceHelper::log('insertStarfaceMessage for user '.$user->id.': '.print_r($callstate, 1));
         $internalDigits = AppConfig::setting('cti.internal_digits', 2);
 
         $numberToSearchFor = $callstate['calledNumber'];
@@ -172,13 +172,15 @@ class StarfaceHelper
         $lq->addSimpleFilter('assigned_user_id', $user->id);
         $lq->addSimpleFilter('cti_id', $callstate['id']);
         $res = $lq->runQuerySingle('date_modified DESC');
-
+        $new_data = array();
         if (!$res->failed) {
+            StarfaceHelper::log('Update existing CtiCall with ID: '. $res->getPrimaryKeyValue());
             $rowUpdate = RowUpdate::for_result($res, null, $user->id);
             $new_data = [
                 'log' => $res->getField('log') . "\n#".$callstate['state'].'# (update)',
             ];
         } else {
+            StarfaceHelper::log('Insert New CtiCall');
             $rowUpdate = RowUpdate::blank_for_model('ctiCall', $user->id);
             $contact = current($this->queryModuleByPhoneNumber('Contact', substr($numberToSearchFor, 2)));
             if ($contact) {
@@ -215,6 +217,7 @@ class StarfaceHelper
             'state' => $callstate['state'],
         );
         $update = array_merge($update, $new_data);
+        StarfaceHelper::log(print_r($new_data, 1));
         $now = new DateTime();
         $oldState = $res->getField('state');
         if ($callstate['state'] == 'CONNECTED' && $oldState != 'CONNECTED') {
@@ -233,6 +236,8 @@ class StarfaceHelper
         $rowUpdate->set($update);
 
         if (!$rowUpdate->validate()) {
+            StarfaceHelper::log('RowUpdate Validation failed!');
+            StarfaceHelper::log(print_r($update, 1));
             StarfaceHelper::log(print_r($rowUpdate->errors, 1));
             return false;
         }
