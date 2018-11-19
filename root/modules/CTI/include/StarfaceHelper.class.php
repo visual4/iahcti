@@ -120,6 +120,11 @@ class StarfaceHelper
         $filter_data = array(
             'any_phone' => $number
         );
+        if ($module == 'Lead') {
+            $filter_data = array(
+                'phone' => $number
+            );
+        }
 
 
         $fmt->loadFilter($filter_data);
@@ -134,22 +139,22 @@ class StarfaceHelper
     public function insertStarfaceMessage($callstate, & $user)
     {
         global $timedate;
-        StarfaceHelper::log('insertStarfaceMessage for user '.$user->id.': '.print_r($callstate, 1));
+        StarfaceHelper::log('insertStarfaceMessage for user ' . $user->id . ': ' . print_r($callstate, 1));
         $internalDigits = AppConfig::setting('cti.internal_digits', 2);
 
-        $numberToSearchFor = $callstate['calledNumber'];
+
         $direction = 'IN'; // als Default, da intern vermittelt weder PROCEEDING noch RINGING ist
         if ($callstate['state'] == 'PROCEEDING') {
             $direction = 'OUT';
         } elseif ($callstate['state'] == 'RINGING') {
             $direction = 'IN';
-            if (strlen($callstate['callerNumber']) <= $internalDigits) {
-                // intern vermittelt, umgekehrte Reihenfolge
-                $numberToSearchFor = $callstate['calledNumber'];
-            } else {
-                // normal bei eingehend
-                $numberToSearchFor = $callstate['callerNumber'];
-            }
+        }
+
+        $numberToSearchFor = $callstate['calledNumber'];
+        if ( strlen($callstate['callerNumber']) > $internalDigits &&
+            ($direction == 'IN' || strlen($numberToSearchFor) <= $internalDigits)
+        ){
+            $numberToSearchFor = $callstate['callerNumber'];
         }
 
         if (
@@ -174,10 +179,10 @@ class StarfaceHelper
         $res = $lq->runQuerySingle('date_modified DESC');
         $new_data = array();
         if (!$res->failed) {
-            StarfaceHelper::log('Update existing CtiCall with ID: '. $res->getPrimaryKeyValue());
+            StarfaceHelper::log('Update existing CtiCall with ID: ' . $res->getPrimaryKeyValue());
             $rowUpdate = RowUpdate::for_result($res, null, $user->id);
             $new_data = [
-                'log' => $res->getField('log') . "\n#".$callstate['state'].'# (update)',
+                'log' => $res->getField('log') . "\n#" . $callstate['state'] . '# (update)',
             ];
         } else {
             StarfaceHelper::log('Insert New CtiCall');
@@ -199,7 +204,7 @@ class StarfaceHelper
                 }
             }
             $new_data = array_merge($new_data, [
-                'log' => '#'.$callstate['state'].'# (new)',
+                'log' => '#' . $callstate['state'] . '# (new)',
                 'lookup_number' => $numberToSearchFor,
                 'cti_user' => $user->cti_user_id,
                 'cti_id' => $callstate['id'],

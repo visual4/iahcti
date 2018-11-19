@@ -17,3 +17,8 @@ layout
 			id: main
 			elements
 				- state
+                - direction
+                - contact
+                - lead
+                - log
+                - lookup_number

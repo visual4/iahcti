@@ -32,4 +32,21 @@ Connected: Verbunden
 
 LBL_LIST_CTI_KEYPAD: Starface Keypad
 
+LBL_CTI_USER: CTI Benutzer
+LBL_CTI_ID: CTI ID
+LBL_STATE: Leitungsstatus
+LBL_CALLER_NUMBER: Nummer des Anrufers
+LBL_CALLER_NAME: Name des Anrufers
+LBL_CALLED_NUMBER: Angerufene Nummer
+LBL_CALLED_NAME: Angerufener Name
+LBL_TIMESTAMP: Zeitstempel
+LBL_CONTACT: Kontakt
+LBL_LEAD: Interessent
+LBL_START: Start (UTC)
+LBL_END: Ende (UTC)
+LBL_DURATION: Dauer
+LBL_STATUS: Anrufstatus
+LBL_LOOKUP_NUMBER: Nummer für Suche
+LBL_LOG: Protokoll
+LBL_DIRECTION: Richtung
    

@@ -33,7 +33,10 @@ LBL_CALLED_NAME: Called Name
 LBL_TIMESTAMP: Timestamp
 LBL_CONTACT: Contact
 LBL_LEAD: Lead
-LBL_START: Start
-LBL_END: End
+LBL_START: Start (UTC)
+LBL_END: End (UTC)
 LBL_DURATION: Duration
 LBL_STATUS: Call Status
+LBL_LOOKUP_NUMBER: Lookup Number
+LBL_LOG: Log
+LBL_DIRECTION: Direction

@@ -102,6 +102,8 @@ class ctiLookup
         $fmt->loadFilter($filter_data);
         //$lq->addField('name');
         //$lq->addField('_display');
+        $fields = $lq->getBaseModel()->getAllDisplayFields();
+        $lq->addFields($fields);
         $res = $fmt->getQueryResult(0, 5, 'date_modified DESC');
         if (!$res || $res->failed)
             return [];
