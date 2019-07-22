@@ -5,7 +5,7 @@
  * Date: 13.02.2017
  * Time: 19:28
  */
-error_log('Lookup -' . $_REQUEST['q'] . '-');
+//error_log('Lookup -' . $_REQUEST['q'] . '-'. $_REQUEST['id']);
 header('Content-Type: application/json');
 if (!defined('sugarEntry'))
     define('sugarEntry', true);
@@ -75,6 +75,26 @@ $result = json_encode([
 );
 
 echo $result;
+
+// logging in 1CRM
+
+require_once 'modules/CTI/include/StarfaceHelper.class.php';
+$helper = new StarfaceHelper();
+$userObj = new User();
+$userObj->id = $user->getField('id');
+$userObj->cti_user_id = $user->getField('cti_user_id');
+$id = array_get_default($_REQUEST, 'id', rand(1000, 2000));
+
+$callstate = [
+            'calledNumber' => '10',
+            'callerNumber' => $number,
+            'state' => 'RINGING',
+            'id' => $id,
+            'timestamp' => date('Y-m-d H:i:s'),
+            'callerName' => '',
+            'calledName' => ''
+        ];
+$helper->insertStarfaceMessage($callstate, $userObj);
 
 class ctiLookup
 {
