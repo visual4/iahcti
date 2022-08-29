@@ -13,6 +13,6 @@ Please be aware that the version you find here on github might contain experimen
 
 You can get a version with support contract from visual4 GmbH
 
-For detailed information about this CTI integration see https://1crm-system.de/crm-erweiterungen/
+For detailed information about this CTI integration see https://1crm-system.de/shop/cti-integration/
 
 Here you will also find detailed information about the all-in-one CRM solution 1CRM and its extensions and highlights (in German).
